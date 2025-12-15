@@ -51,7 +51,7 @@ const userSchema =  new mongoose.Schema({
     {timestamps:true}   
 );
 
-const user = mongoose.model("user",userSchema);
+
 // to explain this one again in later video 
 // prehook so that our password is encypted
 // it just try to hash our password like 12443 =fsojvoisj that it 
@@ -70,10 +70,15 @@ userSchema.pre("save",async function (next) {
     }
 });
 
-
+// for checking correct password 
+userSchema.methods.matchPassword = async function (enteredPassword) {
+    const isPasswordCorrect = await bcrypt.compare(enteredPassword,this.password);
+    return isPasswordCorrect
+}
 
 // ✅ Model (Capitalized by convention)
 const User = mongoose.model("User", userSchema);
+
 
 
 export default User;

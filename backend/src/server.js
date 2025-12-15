@@ -31,6 +31,8 @@ const PORT = process.env.PORT
 
 
 // correct way 
+
+app.use(express.json());
 app.use("/api/auth",authRoutes);   //“Every route defined inside authRoutes should start with /api/auth.”
 
 

@@ -22,19 +22,19 @@ const userSchema =  new mongoose.Schema({
     },
     profilePic:{
         type:String,
-        default:""
+        default:"",
     },
     nativeLanguage:{
         type:String,
-        default:""
+        default:"",
     },
     learningLanguage:{
         type:String,
-        default:""
+        default:"",
     },
     Location:{
         type:String,
-        default:""
+        default:"",
     },
     isOnboarded:{
         type:Boolean,
@@ -61,11 +61,19 @@ userSchema.pre("save",async function (next) {
     if(!this.isModified("password")) return next();
     
     try {
-        const salt = await bcrypt.gensalt(10);
+        const salt = await bcrypt.genSalt(10);
         this.password = await bcrypt.hash(this.password, salt);
 
         next();
     } catch (error) {
         next(error)
     }
-})
+});
+
+
+
+// ✅ Model (Capitalized by convention)
+const User = mongoose.model("User", userSchema);
+
+
+export default User;
